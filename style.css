@@ -1,7 +1,21 @@
-/* .cat-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 6px;
-  background: #f9f9f9;
-} */
+.schoolbell-regular {
+  font-family: "Schoolbell", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --background-color: aquamarine;
+}
+
+* {
+  box-sizing: border-box;
+}
+h1 {
+  font-family: "Schoolbell", cursive;
+  text-align: center;
+}
+
+#weather-output {
+  background-color: var(--background-color);
+}
