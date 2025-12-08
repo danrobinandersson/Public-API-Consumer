@@ -4,37 +4,48 @@ const input = document.getElementById("city-input");
 const button = document.getElementById("search-btn");
 const output = document.getElementById("weather-output");
 
-// Function to fetch weather for a typed city
-function fetchWeather(city) {
-  const url = `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${city}`;
+async function fetchWeather(city) {
+  const weatherUrl = `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${city}`;
+  const catUrl = "https://cataas.com/cat?json=true";
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Full JSON response:", data);
+  try {
+    const [weatherRes, catRes] = await Promise.all([
+      fetch(weatherUrl),
+      fetch(catUrl),
+    ]);
 
-      if (data.error) {
-        output.innerHTML = `<p>City not found. Try again!</p>`;
-        return;
-      }
+    const weatherData = await weatherRes.json();
+    const catData = await catRes.json();
 
-      const tempC = data.current.temp_c;
-      const rain = data.current.precip_mm;
-      const condition = data.current.condition.text;
-      const icon = "https:" + data.current.condition.icon;
+    if (weatherData.error) {
+      output.innerHTML = `<p>City not found. Try again!</p>`;
+      return;
+    }
 
-      output.innerHTML = `
+    const tempC = weatherData.current.temp_c;
+    const rain = weatherData.current.precip_mm;
+    const condition = weatherData.current.condition.text;
+    const icon = "https:" + weatherData.current.condition.icon;
+
+    const catImg = `https://cataas.com/cat/${catData.id}`;
+
+    output.innerHTML = `
       <p><strong>City:</strong> ${city}</p>
       <p><strong>Temperature:</strong> ${tempC}°C</p>
       <p><strong>Rain:</strong> ${rain} mm</p>
       <p><strong>Condition:</strong> ${condition}</p>
       <p><strong>Cat advice:</strong> ${getCatAdvice(tempC)}</p>
       <img src="${icon}" alt="${condition}">
-      `;
-    })
-    .catch(() => {
-      output.innerHTML = `<p>Error fetching weather data.</p>`;
-    });
+
+      <hr>
+      <p><strong>Random cat of the day:</strong></p>
+      <img src="${catImg}" 
+           alt="Random cat" 
+           style="max-width: 300px; border-radius: 10px; margin-top: 10px;">
+    `;
+  } catch (err) {
+    output.innerHTML = `<p>Error fetching data.</p>`;
+  }
 }
 
 function getCatAdvice(temp) {
@@ -50,4 +61,15 @@ button.addEventListener("click", () => {
     return;
   }
   fetchWeather(city);
+  input.value = "";
+});
+
+// Script for banner buttons
+const bannerButtons = document.querySelectorAll(".banner button");
+
+bannerButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const city = btn.dataset.city;
+    fetchWeather(city);
+  });
 });

@@ -13,18 +13,30 @@
     />
   </head>
   <body>
+    <div class="banner">
+      <button data-city="Paris">Paris</button>
+      <button data-city="London">London</button>
+      <button data-city="New York">New York</button>
+      <button data-city="Tokyo">Tokyo</button>
+      <button data-city="Rome">Rome</button>
+    </div>
+
     <h1>Should I let the cat out today?</h1>
-    
-    <label for="city-input">Type a city</label>
-    <input
-      type="text"
-      id="city-input"
-      placeholder="e.g. London, Paris, Nairobi"
-    />
 
-    <button id="search-btn">Search</button>
+    <main>
+      <div class="search">
+        <label for="city-input">Type a city</label>
+        <input
+          type="text"
+          id="city-input"
+          placeholder="e.g. London, Paris, Nairobi"
+        />
 
-    <div id="weather-output"></div>
+        <button id="search-btn">Search</button>
+      </div>
+
+      <div id="weather-output"></div>
+    </main>
 
     <script type="module" src="script.js"></script>
   </body>

@@ -1,5 +1,21 @@
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --blue-slate: #495867ff;
+  --glaucous: #577399ff;
+  --pale-sky: #bdd5eaff;
+  --ghost-white: #f7f7ffff;
+  --vibrant-coral: #fe5f55ff;
+}
+
+body {
+  background-color: var(--ghost-white);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
 }
 
 .schoolbell-regular {
@@ -8,15 +24,58 @@
   font-style: normal;
 }
 
-:root {
-  --background-color: aquamarine;
-}
-
 h1 {
   font-family: "Schoolbell", cursive;
+  font-size: 3rem;
   text-align: center;
+  color: var(--vibrant-coral);
+  margin-top: 4rem;
+  margin-bottom: 3rem;
 }
 
-#weather-output {
-  background-color: var(--background-color);
+button {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.banner {
+  display: flex;
+  justify-content: space-around;
+  height: 3rem;
+  width: 100vw;
+  background-color: var(--glaucous);
+}
+
+.banner button {
+  background-color: transparent;
+  color: white;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#city-input {
+  padding: 0.5rem 1rem;
+  background-color: var(--ghost-white);
+  border-radius: 30px;
+  border: 1px solid var(--glaucous);
+}
+
+#search-btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--ghost-white);
+  border-radius: 30px;
+  border: 1px solid var(--glaucous);
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+#search-btn:hover {
+  background-color: var(--glaucous);
+  color: var(--ghost-white);
 }
