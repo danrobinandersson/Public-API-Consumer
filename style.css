@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .schoolbell-regular {
   font-family: "Schoolbell", cursive;
   font-weight: 400;
@@ -8,9 +12,6 @@
   --background-color: aquamarine;
 }
 
-* {
-  box-sizing: border-box;
-}
 h1 {
   font-family: "Schoolbell", cursive;
   text-align: center;
