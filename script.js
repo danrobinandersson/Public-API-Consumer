@@ -18,10 +18,19 @@ async function fetchWeather(city) {
     const catData = await catRes.json();
 
     if (weatherData.error) {
-      output.innerHTML = `<p>City not found. Try again!</p>`;
+      output.innerHTML = `
+      <div class="error-container">
+        <p class="error-message">City not found. Try again!</p>
+        <img 
+          src="https://cataas.com/cat/sad?nocache=true&x=${Date.now()}"
+          alt="Sad cat" 
+          class="cat-img"
+        >
+      </div>
+  `;
       return;
     }
-
+    const cityName = weatherData.location.name;
     const tempC = weatherData.current.temp_c;
     const rain = weatherData.current.precip_mm;
     const condition = weatherData.current.condition.text;
@@ -30,25 +39,43 @@ async function fetchWeather(city) {
     const catImg = `https://cataas.com/cat/${catData.id}`;
 
     output.innerHTML = `
-      <p><strong>City:</strong> ${city}</p>
+  <div class="output-container">
+
+    <h3>${getCatAdvice(tempC, rain, condition)}</h3>
+
+    <div class="weather-cat-container">
+
+    <div class="weather-data">
+      <p><strong>City:</strong> ${cityName}</p>
       <p><strong>Temperature:</strong> ${tempC}°C</p>
       <p><strong>Rain:</strong> ${rain} mm</p>
       <p><strong>Condition:</strong> ${condition}</p>
-      <p><strong>Cat advice:</strong> ${getCatAdvice(tempC)}</p>
-      <img src="${icon}" alt="${condition}">
+      <img src="${icon}" alt="${condition}" class="weather-icon">
+    </div>
 
-      <hr>
+    <div class="cat-section">
       <p><strong>Random cat of the day:</strong></p>
-      <img src="${catImg}" 
-           alt="Random cat" 
-           style="max-width: 300px; border-radius: 10px; margin-top: 10px;">
-    `;
+      <img
+        src="${catImg}"
+        alt="Random cat"
+        class="cat-img"
+      >
+    </div>
+      </div>
+
+  </div>
+`;
   } catch (err) {
     output.innerHTML = `<p>Error fetching data.</p>`;
   }
 }
 
-function getCatAdvice(temp) {
+const rainyConditions = ["Rain", "Light rain", "Light drizzle"];
+
+function getCatAdvice(temp, rain, condition) {
+  if (rain > 0 || rainyConditions.includes(condition)) {
+    return "The cat might get wet!";
+  }
   if (temp <= 3) return "It's too cold for the cat!";
   if (temp <= 10) return "Not really warm but… let the poor cat out anyway!";
   return "Nice weather, the cat should be outside!";
