@@ -36,15 +36,12 @@ async function fetchWeather(city) {
     const rain = weatherData.current.precip_mm;
     const condition = weatherData.current.condition.text;
     const icon = "https:" + weatherData.current.condition.icon;
-
-    console.log(feelsLike);
-
     const catImg = `https://cataas.com/cat/${catData.id}`;
 
     output.innerHTML = `
   <div class="output-container">
 
-    <h3>${getCatAdvice(tempC, rain, condition)}</h3>
+    <h3 class="cat-advice-text">${getCatAdvice(tempC, rain, condition)}</h3>
 
     <div class="weather-cat-container">
 
