@@ -31,10 +31,13 @@ async function fetchWeather(city) {
       return;
     }
     const cityName = weatherData.location.name;
+    const feelsLike = weatherData.current.feelslike_c;
     const tempC = weatherData.current.temp_c;
     const rain = weatherData.current.precip_mm;
     const condition = weatherData.current.condition.text;
     const icon = "https:" + weatherData.current.condition.icon;
+
+    console.log(feelsLike);
 
     const catImg = `https://cataas.com/cat/${catData.id}`;
 
@@ -48,8 +51,10 @@ async function fetchWeather(city) {
     <div class="weather-data">
       <p><strong>City:</strong> ${cityName}</p>
       <p><strong>Temperature:</strong> ${tempC}°C</p>
+       <p><strong>Feels like:</strong> ${feelsLike}°C</p>
       <p><strong>Rain:</strong> ${rain} mm</p>
       <p><strong>Condition:</strong> ${condition}</p>
+  
       <img src="${icon}" alt="${condition}" class="weather-icon">
     </div>
 
@@ -89,6 +94,18 @@ button.addEventListener("click", () => {
   }
   fetchWeather(city);
   input.value = "";
+});
+
+input.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    const city = input.value.trim();
+    if (city === "") {
+      output.innerHTML = "<p>Please type a city name.</p>";
+      return;
+    }
+    fetchWeather(city);
+    input.value = "";
+  }
 });
 
 // Script for banner buttons
